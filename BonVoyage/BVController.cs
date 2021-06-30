@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using KERBALISM;
 
 namespace BonVoyage
 {
@@ -463,6 +464,21 @@ namespace BonVoyage
                         }
                     }
                 }
+
+                // Kerbalism Support 
+                if (DetectKerbalism.Found())
+                {
+                    ProcessController processController = part.FindModuleImplementing<ProcessController>();
+                    if (processController != null)
+                    {
+                        // USI Reactors + NearFutureElectrical
+                        if (processController.title == "Fission reactor")
+                        {
+                            otherPower += processController.capacity * 10; // capacity is 1/10th of generated EC
+                        }
+
+                    }
+                } 
             }
 
             return otherPower;
